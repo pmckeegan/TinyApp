@@ -8,13 +8,15 @@
   <title>TinyApp</title>
 </head>
 <body style="font-size:20px; padding:50px;">
-    <!-- Add EJS code here -->
-    <h2>Loop</h2>
+    <header>
+    <% include ./partials/_header.ejs %>
+</header>
 
+    <h2>URLS</h2>
+<a href='#'>Shorten a new URL</a>
 <ul>
-        <li><%= shortURL %></li>
-        <li><%= longURL %></li>
+        <li><%= longURL + " - " + shortURL %></li>
 </ul>
-    <a href='#'>Shorten a new URL</a>
+
 </body>
 </html>

@@ -10,16 +10,26 @@
   <title>TinyApp</title>
 </head>
 <body style="font-size:20px; padding:50px;">
-
-    <!-- Add EJS code here -->
-
-    <h2>Loop</h2>
-
+<header>
+    <% include ./partials/_header.ejs %>
+</header>
+ <!-- Add EJS code here -->
+<h2>TinyApp</h2>
+<a href='#'>Shorten a new URL</a>
+<br>
+<br>
 <ul>
+    <%for (var url in urls){ %>
+        <li><%= url %> | <%= urls[url] %></li>
+    <% } %>
+</ul>
+
+
+</body>
+</html>
+
+<!-- <ul>
     <%for (var url in urls){ %>
         <li><%= url %></li>
     <% } %>
-</ul>
-<a href='#'>Shorten a new URL</a>
-</body>
-</html>
+</ul> -->
