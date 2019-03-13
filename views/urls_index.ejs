@@ -15,14 +15,15 @@
 </header>
  <!-- Add EJS code here -->
 <h2>TinyApp</h2>
-<a href='#'>Shorten a new URL</a>
+<a href='http://localhost:8080/urls/new'>Shorten a new URL</a>
 <br>
 <br>
 <ul>
     <%for (var url in urls){ %>
-        <li><%= url %> | <%= urls[url] %></li>
+        <li><a href="/u/<%= url %>"> <%= url %></a> | <a href="/u/<%= url %>"> <%= urls[url] %></a></li>
     <% } %>
 </ul>
+
 
 
 </body>
