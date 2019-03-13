@@ -19,10 +19,18 @@
 <br>
 <br>
 <ul>
-    <%for (var url in urls){ %>
-        <li><a href="/u/<%= url %>"> <%= url %></a> | <a href="/u/<%= url %>"> <%= urls[url] %></a></li>
+    <% for (var url in urls){ %>
+        <a href="/u/<%= url %>"> <%= url %></a> | <a href="/u/<%= url %>"> <%= urls[url] %></a>
+        <form method="POST" action="/urls/<%= url %>/delete">
+
+                    <button type="delete"background-color: #AABBCC;}>Delete Link</button>
+            </form>
     <% } %>
 </ul>
+
+
+
+
 
 
 
