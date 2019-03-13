@@ -12,10 +12,21 @@
     <% include ./partials/_header.ejs %>
 </header>
 
-    <h2>URLS</h2>
-<a href='http://localhost:8080/urls/new'>Shorten a new URL</a>
+    <h1><%= shortURL %></h1>
+<br>
+    <a href='http://localhost:8080/urls/new'>Shorten a URL</a>
+<br>
 <ul>
-        <li><%= longURL + " | " + shortURL %></li>
+    Shortened URL:<a href="<%= longURL %>"> <%= longURL + " | " + shortURL %></a>
+    <br>
+    <form class="form-inline" action="/urls/<%= shortURL %>/update" method="POST">
+      <div class="form-group mb-2">
+        <label for="longURL">Update URL:</label>
+        <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+   
 </ul>
 
 <a href='http://localhost:8080/urls'>View all Tiny URL's</a>
