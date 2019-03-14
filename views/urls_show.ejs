@@ -12,9 +12,9 @@
     <% include ./partials/_header.ejs %>
 </header>
 
-    <h1><%= shortURL %></h1>
+
+    <h1>Your short URL: <%= shortURL %></h1>
 <br>
-    <a href='http://localhost:8080/urls/new'>Shorten a URL</a>
 <br>
 <ul>
     Shortened URL:<a href="<%= longURL %>"> <%= longURL + " | " + shortURL %></a>
@@ -26,10 +26,6 @@
         <button type="submit" class="btn btn-primary">Update</button>
       </div>
     </form>
-   
 </ul>
-
-<a href='http://localhost:8080/urls'>View all Tiny URL's</a>
-
 </body>
 </html>
