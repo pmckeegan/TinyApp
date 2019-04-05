@@ -14,35 +14,21 @@ const urlDatabase = {
 
 app.use(cookieParser());
 
-
 //home page
 app.get("/" , (req, res) => {
-  let templateVars = {
-    username:req.cookies["username"],
-    // ... any other vars
-  };
-  res.send("Hello!");
+  let templateVars = {urls: urlDatabase,
+  username:req.cookies["username"]};
+  if(templateVars.username){
+    res.redirect('/urls');
+  } else {
+    res.redirect('/urls');
+  }
 });
+
 app.listen(PORT, () => {
-  console.log(`Example App listening on ${PORT}!`);
-  
+  console.log(`Example App listening on ${PORT}!`);  
 });
 
-app.get("/urls.json", (req, res) => {
-  let templateVars = {
-    username:req.cookies["username"],
-  };
-  res.json(urlDatabase);
-});
-
-//hello page
-app.get("/hello", (req, res) =>{
-  let templateVars = {
-    username:req.cookies["username"],
-  };
-  res.send("<html><body>Hello <b>World</b></body></html>\n")
-
-})
 //main url page
 app.get("/urls", (req, res) => {
   let templateVars = {urls: urlDatabase,
@@ -53,7 +39,7 @@ app.get("/urls", (req, res) => {
 //new 
 app.get("/urls/new", (req, res) => {
   let templateVars = {
-    username:req.cookies["username"]  
+    username:req.cookies["username"]
   };
   res.render("urls_new", templateVars);
 });
@@ -95,11 +81,10 @@ app.post ("/urls/:shortURL/delete", (req, res) => {
 //update link
 app.post ("/urls/:shortURL/update", (req, res) => {
   urlDatabase[req.params.shortURL] = req.body.longURL
-  console.log(req.params.shortURL);
   res.redirect("/urls/");
-let templateVars = {
-  username:req.cookies["username"]
-};
+    let templateVars = {
+    username:req.cookies["username"]
+    };
 });
 
 // header login form

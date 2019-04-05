@@ -4,39 +4,26 @@
   <title>TinyApp</title>
 </head>
 <body>
-  <!-- Login Form --> 
-    <!-- <form class="form-inline" action="/login" method="POST">
+  <% if (!username) { %>
+    <form action="/login" method="POST">
       <div class="form-group mb-2">
-        <label for="username"></label>
-        <input class="form-control" type="text" 
-        name="username" placeholder="Login" style="width: 300px; margin: 1em">
-        <button type="submit" class="btn btn-primary">Login</button>
-      </div>
-    </form> -->
-
-    <% if (!username) { %>
-      <form action="/login" method="POST">
-        <div class="form-group mb-2">
-        <label for="exampleInputEmail1">Username</label>
-          <input class="form-control" type="text" name="username" placeholder="Enter your username" style="width: 300px; margin: 1em">
-          <button type="submit" class="btn btn-primary">
-            Login
-          </button>
-        </div>
-      </form>
-    <% } else { %>
-      Logged in as: <%= username %>
-      <form class="form-inline" action="/logout" method="POST">
-        <p>
+      <label for="exampleInputEmail1">Username</label>
+        <input class="form-control" type="text" name="username" placeholder="Enter your username" style="width: 300px; margin: 1em">
         <button type="submit" class="btn btn-primary">
-          Logout
+          Login
         </button>
-        </p>
-      </form>
-    <% } %>
-
-
-
+      </div>
+    </form>
+  <% } else { %>
+    Logged in as: <%= username %>
+    <form class="form-inline" action="/logout" method="POST">
+      <p>
+      <button type="submit" class="btn btn-primary">
+        Logout
+      </button>
+      </p>
+    </form>
+  <% } %>
 <div>
   <!-- Navigation Links -->
     <a href='http://localhost:8080/urls/new'>Shorten a URL</a>
