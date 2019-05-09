@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+				integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
 <header>
   <H1>Tiny App</H1>
   <% if (user_id) { %>
-    <form action="/logout" method="POST" type="submit" value="Logout">
-     <%= user_id %>
-    <button>Logout</button>
-    </form>
+   <form action="/logout" method="POST" type="submit" value="Logout">
+     <div>
+      <%= user_id %> 
+      <button class="btn btn-primary">Logout</button><br>
+      </div>
+   </form>
+       
+     
   <% } else{ %>
     <a href="/register">Register</a>
     <a href="/login">Login</a>
