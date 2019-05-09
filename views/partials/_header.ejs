@@ -3,32 +3,23 @@
 <head>
   <title>TinyApp</title>
 </head>
-<body>
-  <% if (!username) { %>
-    <form action="/login" method="POST">
-      <div class="form-group mb-2">
-      <label for="exampleInputEmail1">Username</label>
-        <input class="form-control" type="text" name="username" placeholder="Enter your username" style="width: 300px; margin: 1em">
-        <button type="submit" class="btn btn-primary">
-          Login
-        </button>
-      </div>
+<header>
+  <H1>Tiny App</H1>
+  <% if (user_id) { %>
+    <form action="/logout" method="POST" type="submit" value="Logout">
+     <%= user_id %>
+    <button>Logout</button>
     </form>
-  <% } else { %>
-    Logged in as: <%= username %>
-    <form class="form-inline" action="/logout" method="POST">
-      <p>
-      <button type="submit" class="btn btn-primary">
-        Logout
-      </button>
-      </p>
-    </form>
+  <% } else{ %>
+    <a href="/register">Register</a>
+    <a href="/login">Login</a>
   <% } %>
+<body>
+</header>
 <div>
   <!-- Navigation Links -->
     <a href='http://localhost:8080/urls/new'>Shorten a URL</a>
     <a href='http://localhost:8080/urls'>View all Tiny URL's</a>
 </div>
-
-</body>
+  </body>
 </html>
