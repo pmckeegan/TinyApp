@@ -7,27 +7,25 @@
 				integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
   <title>TinyApp</title>
 </head>
-<header>
-  <H1>Tiny App</H1>
-  <% if (user_id) { %>
-   <form action="/logout" method="POST" type="submit" value="Logout">
-     <div>
-      <%= user_id %> 
-      <button class="btn btn-primary">Logout</button><br>
-      </div>
-   </form>
-       
-     
-  <% } else{ %>
-    <a href="/register">Register</a>
-    <a href="/login">Login</a>
-  <% } %>
 <body>
-</header>
-<div>
-  <!-- Navigation Links -->
-    <a href='http://localhost:8080/urls/new'>Shorten a URL</a>
-    <a href='http://localhost:8080/urls'>View all Tiny URL's</a>
-</div>
+  <H1>Tiny App</H1>
+  <% if (!user_id) { %>
+    <div>
+      <a href="/register">Register</a> | <a href="/login">Login</a>
+    </div>
+    <% } else { %>
+    <div>
+      <a href="/urls/">URLS</a> | <a href="/urls/new">Create a new TinyURL</a>
+    </div>
+    <div class="btn-group" role="group">
+      <form method="POST" action="/logout">
+        <button type="submit" class="btn btn-primary btn-sm ">Logout</button>
+      </form>
+    </div>
+  <% } %>
+
+
   </body>
 </html>
+
+

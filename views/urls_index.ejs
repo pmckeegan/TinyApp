@@ -14,30 +14,29 @@
 
 </head>
 
-<body style="font-size:20px; padding:50px;">
-	<ul>
-	
-	<% for (let shortURL in urls){ %>
-			
-			<li><%= shortURL %> <a href="/u/<%= urls[shortURL] %>"></a> - 
-			 <a href="<%= urls[shortURL].longURL %>"> <%= urls[shortURL].longURL %></a></li>
-				<div>
-				<form method="POST" action="/urls/<%= shortURL %>/update">
-					<button type="submit" class="btn btn-primary">Update</button>
-				</form>
-				<form method="POST" action="/urls/<%= urls %>/delete">
-					<button type="submit" class="btn btn-danger">Delete Link</button>
-					</form>
-					</div>
-				<form class="form-inline" method="POST" action="/urls/<%= urls %>/" >
-					<div class="form-group mb-2">
-					<input class="form-control" type="text" name="longURL" 
-					placeholder="http://" style="width: 800px; margin: 1em">
-				</div>
-			</form>
-				</form>
-			
-	<% } %>
-	</ul>
-</body>
+	<body style="font-size:20px; padding:50px;">
+		<ul>
+			<% for (let shortURL in urls){ %>
+					
+					<li><%= shortURL %><a href="/urls/<%= shortURL %>"></a> - 
+					<a href="<%= urls[shortURL].longURL %>">  <%= urls[shortURL].longURL %> </a></li>
+						
+						<div>
+						<form method="POST" action="/urls/<%= shortURL %>/update">
+							<button type="submit" class="btn btn-primary">Update</button>
+						</form>
+						<form method="POST" action="/urls/<%= urls %>/delete">
+							<button type="submit" class="btn btn-danger">Delete Link</button>
+							</form>
+							</div>
+						
+						<form class="form-inline" method="POST" action="/urls/<%= urls %>/" >
+							<div class="form-group mb-2">
+								<input class="form-control" type="text" name="longURL" 
+								placeholder="http://" style="width: 800px; margin: 1em">
+							</div>
+						</form>
+			<% } %>
+		</ul>
+	</body>
 </html>
