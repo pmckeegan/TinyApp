@@ -8,35 +8,39 @@
 				integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	
 	<title>TinyApp</title>
-	<header>
-		<% include ./partials/_header.ejs %>
-	</header>
-
 </head>
 
+
+
 	<body style="font-size:20px; padding:50px;">
-		<ul>
+		<header>
+			<% include ./partials/_header.ejs %>
+		</header>
+		<h4>Urls Index</h4>
 			<% for (let shortURL in urls){ %>
+				
+				<table class="table">
+					<tr>
 					
-					<li><%= shortURL %><a href="/urls/<%= shortURL %>"></a> - 
-					<a href="<%= urls[shortURL].longURL %>">  <%= urls[shortURL].longURL %> </a></li>
-						
-						<div>
-						<form method="POST" action="/urls/<%= shortURL %>/update">
-							<button type="submit" class="btn btn-primary">Update</button>
-						</form>
-						<form method="POST" action="/urls/<%= urls %>/delete">
+					<td>
+						<a href="/urls/<%= shortURL %>"><%= shortURL %></a> - 
+							<a href="<%= urls[shortURL].longURL %>">  <%= urls[shortURL].longURL %> </a>
+					</td>
+					
+					<td>	
+						<button  type="submit" class="btn btn-primary">
+							  <a href="/urls/<%= shortURL %>" class="text-white">Update</a>
+						</button>
+					</td>
+					
+					<td>
+						<form class="form-inline" method="POST" action="/urls/<%= shortURL %>/delete">
 							<button type="submit" class="btn btn-danger">Delete Link</button>
-							</form>
-							</div>
-						
-						<form class="form-inline" method="POST" action="/urls/<%= urls %>/" >
-							<div class="form-group mb-2">
-								<input class="form-control" type="text" name="longURL" 
-								placeholder="http://" style="width: 800px; margin: 1em">
-							</div>
-						</form>
+						</form></td>
+					</td>
+					
+					</tr>
+				</table>
 			<% } %>
-		</ul>
 	</body>
 </html>

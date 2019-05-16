@@ -4,26 +4,28 @@
   <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
+integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 <title>TinyApp</title>
 </head>
   <body style="font-size:20px; padding:50px;">
-  <header>
-    <% include ./partials/_header.ejs %>
-  </header>
-<h1>Your short URL: <%= shortURL %></h1>
-<br>
-<br>
-<ul>
-Shortened URL:<a href="<%= longURL %>"> <%= longURL + " | " + shortURL %></a>
-<br>
-<form class="form-inline" action="/urls/<%= shortURL %>/update" method="POST">
-  <div class="form-group mb-2">
-    <label for="longURL">Update URL:</label>
-    <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em">
-    <button type="submit" class="btn btn-primary">Update</button>
-  </div>
-</form>
-</ul>
-</body>
-</html>
+    <header>
+      <% include ./partials/_header.ejs %>
+    </header>
+    <h1>Your short URL: <%= shortURL %></h1>
+    <br>
+    <br>
+    <ul>
+    Shortened URL:<a href="<%= longURL %>"> <%= shortURL + " || " + longURL %></a>
+    <br>
+    <form class="form-inline" action="/urls/<%= shortURL %>/update" method="POST">
+      <div class="form-group mb-2">
+        <label for="longURLEdit">Update URL:</label>
+        <input class="form-control" type="url" name="longURL" 
+        placeholder="http://" style="width: 300px; margin: 1em">
+        <button type="submit" class="btn btn-primary">Update</button>
+      </div>
+    </form>
+    </ul>
+    </body>
+    </html>

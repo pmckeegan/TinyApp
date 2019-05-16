@@ -14,10 +14,10 @@ app.use(cookieSession({
   keys: ['key1', 'key2']
 }))
 
-// app.use(function(req, res, next) {
-//   res.locals.user_id = req.session["user_id"] || false;
-//   next();
-// });
+app.use(function(req, res, next) {
+  res.locals.user_id = req.session["user_id"] || false;
+  next();
+});
 
 //--Application Functions
 
@@ -59,7 +59,6 @@ function registerUser(email, password) {
   return newUser;
 }
 
-
 //--Database Info
 const urlDatabase = {
   "b2xvn2": {
@@ -82,44 +81,34 @@ const users = {
 
 //Register URL
 app.get("/register", (req, res) => {
-  res.render('register')
+  const templateVars = {
+    user_id: null
+  };
+  res.render('register', templateVars)
 });
 
 // Registration Form.
 app.post("/register", (req, res) => {
-
-  var userID = generateRandomString();
-  let encryptedPW = bcrypt.hashSync(req.body.password, 10)
-  let email = req.body.email
-  let userInfo = {
-    id: userID,
-    email: email,
-    password: encryptedPW
-  };
-  //check inputs for content and email for duplicates
-  if(!userInfo.email || !userInfo.password) {
-    res.status(400).send('Enter your email address and choose a password to register.');
-    
-  } else if (emailVerifier(req.body.email)) {
-    res.status(400).send('That email address is already registered!');
+  if (!req.body.email || !req.body.password) {
+    res.status(403).send("error: please enter an email/password")
   } else {
-
-    const newUser = registerUser(email, password);
-    req.session.user_id = newUser.id;
-    res.redirect("/urls/");
-    
-    res.session('user_id', userID);
-    res.redirect('/urls');
+    const email = req.body.email;
+    const password = req.body.password;
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    if (email && password) {
+      const existingEmail = emailVerifier(email);
+      if (!existingEmail) {
+        const newUser = registerUser(email, hashedPassword);
+        req.session.user_id = newUser.id;
+        res.redirect("/urls/");
+      } else {
+        res.status(403).send("this email is already registered!");
+      }
+    } else {
+      res.redirect("/register/");
+    }
   }
-});
 
-//home page
-app.get("/" , (req, res) => {
-  if (req.session.user_id) {
-    res.redirect('/urls');
-  }
-    res.redirect('/register');
-  
 });
 
 app.get("/login", (req, res) => {
@@ -127,27 +116,52 @@ app.get("/login", (req, res) => {
   res.render('login');
 });
 
+app.post("/login", (req, res) => {
+  let login = false;
+//check login credentials
+  for (var user in users) {
+    if ((users[user].email === req.body.email) && (bcrypt.compareSync(req.body.password, users[user].password))) {
+      login = true;
+      req.session.user_id = users[user].id;
+    }
+    else if (!emailVerifier(req.body.email)) {
+      res.status(403)
+      res.send('that email does not exist');
+    }
+  }
+  res.redirect('/urls');
+})
+
+
+//home page
+app.get("/" , (req, res) => {
+  if (!req.session.user_id) {
+    res.redirect('/register')
+  } else {
+    res.redirect('/urls');
+  }
+});
+
+
+
 //main url page
 app.get("/urls", (req, res) => {
   let templateVars = {
     urls: urlDatabase, 
     shortURL: req.params.shortURL,
-    username:req.session.user_id
+    user_id:req.session.user_id
   };
-  console.log("REQ BODEE", req.body)
   res.render("urls_index", templateVars);
 });
 
 //generate short url
 app.post("/urls", (req, res) => {
-  let templateVars = {
-    username:req.session.user_id,
-    urls: urlDatabase,
+  let shortURL = generateRandomString();
+  urlDatabase[shortURL] = {
+    longURL: req.body.longURL,
+    userID: req.session.user_id
   };
-  const shortURL = generateRandomString();
-  urlDatabase[shortURL] = req.body.longURL
   res.redirect("/urls/" + shortURL);  
-  res.render(templateVars)
 });
 
 //new 
@@ -155,7 +169,7 @@ app.post("/urls", (req, res) => {
 app.get("/urls/new", (req, res) => {
   if (req.session.user_id) {
     let templateVars = {
-      username:res.session.user_id
+      user_id: req.session.user_id
     };
     res.render("urls_new", templateVars)
   } else {
@@ -188,47 +202,27 @@ app.get("/urls/:shortURL", (req, res) => {
 
 //delete link 
 app.post ("/urls/:shortURL/delete", (req, res) => {
-if (urlDatabase[shortURL].userID === req.session.user_id)
-delete urlDatabase[req.params.shortURL];  
-  
-  res.redirect("/urls")
-  ;
+  if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
+  delete urlDatabase[req.params.shortURL];  
+    res.redirect("/urls");
+  }
 });
 //update link
 app.post ("/urls/:shortURL/update", (req, res) => {
   if (req.session.user_id === urlDatabase[req.params.shortURL].userID) {
-    let newURL = req.body.longURLrename;
-    urlDatabase[req.params.shortURL].longURL= newURL;
-    res.redirect("/urls/");
+    let newURL = req.body.longURL;
+    urlDatabase[req.params.shortURL].longURL = newURL;
+    res.redirect("/urls");
   } else {
     res.status(403).send("Can't edit someone else's URL's!")
   }
 });
 
 // header login form
-app.post("/login", (req, res) => {
-  let login = false;
-  let userID = '';
-
-//check login credentials
-  for (var user in users) {
-    if ((users[user].email === req.body.email) && (bcrypt.compareSync(req.body.password, users[user].password))) {
-      login = true;
-      userID = users[user].id;
-    }
-  }
-  if (!emailVerifier(req.body.email)) {
-    res.status(403)
-    res.send('that email does not exist');
-  } else if (login) {
-    res.session('user_id', userID);
-    res.redirect('/urls');
-  }
-})
 
 // header logout form
 app.post("/logout", (req, res) => {
-  res.session = null;
+  req.session = null;
   res.redirect("/login");
 });
 
