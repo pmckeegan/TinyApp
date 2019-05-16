@@ -135,7 +135,7 @@ app.post("/login", (req, res) => {
 
 //home page
 app.get("/" , (req, res) => {
-  if (!req.session.user_id) {
+  if (req.session.user_id) {
     res.redirect('/register')
   } else {
     res.redirect('/urls');
