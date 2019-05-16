@@ -6,8 +6,11 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" 
 				integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-	
+
 	<title>TinyApp</title>
+<style>
+h3 {text-align:center;}
+</style>
 </head>
 
 
@@ -16,15 +19,20 @@
 		<header>
 			<% include ./partials/_header.ejs %>
 		</header>
-		<h4>Urls Index</h4>
+		<h3>Urls Index</h3>
 			<% for (let shortURL in urls){ %>
 				
-				<table class="table">
+				<table width="600" cellspacing="0" cellpadding="0" class="table">
 					<tr>
+					<tr>
+						<td width="400"></td>
+						<td width="100"></td>
+						<td width="100"></td>
+					</tr>
 					
 					<td>
 						<a href="/urls/<%= shortURL %>"><%= shortURL %></a> - 
-							<a href="<%= urls[shortURL].longURL %>">  <%= urls[shortURL].longURL %> </a>
+						<a href="<%= urls[shortURL].longURL %>">  <%= urls[shortURL].longURL %> </a>
 					</td>
 					
 					<td>	

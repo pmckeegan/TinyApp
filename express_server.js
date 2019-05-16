@@ -205,6 +205,8 @@ app.post ("/urls/:shortURL/delete", (req, res) => {
   if (urlDatabase[req.params.shortURL].userID === req.session.user_id) {
   delete urlDatabase[req.params.shortURL];  
     res.redirect("/urls");
+  } else {
+    res.status(403).send("Can't delete someone else's urls")
   }
 });
 //update link
